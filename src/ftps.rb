@@ -6,17 +6,17 @@ require 'eventmachine'
 
     * USER <NAME>
     * PASS <PASSWORD>
-    * PWD
-    * PASV
-    * LIST
-    * DELE <FILENAME>
-    * NOOP
-    * QUIT
-    * RETR (скачать файл. Перед RETR должна быть команда PASV)
-    * RNFR
-    * RNTO — Переименовать файл. RNFR — что переименовывать, RNTO — во что.
-    * STOR — Закачать файл. Перед STOR должна быть команда PASV
-    * FEAT
+    * PASV - enter the passive FTP-mode
+    * RNFR <FILENAME> - select a file on the server to be renamed
+    * RNTO <FILENAME> - rename the file, selected with RNFR command, to <FILENAME>
+    * STOR <FILENAME> - save file on the server with name <FILENAME>
+    * FNRC - file is sent
+    * RETR <FILENAME> - send file, named <FILENAME>, to the client
+    * DELE <FILENAME> - delete file, named <FILENAME>, from the server
+    * LIST - get contents of the current folder
+    * PWD - get current directory path
+    * QUIT - close the connection
+    * NOOP - does nothing
 =end
 
 module DataConnectionServer
@@ -238,8 +238,6 @@ module ControlConnectionServer
           end
 
           result
-        when /^FEAT/
-          '211-Extensions supported:' + LBRK + ' ABOR' + LBRK + '211 END'
         else
           # type code here
       end
